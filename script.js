@@ -55,11 +55,7 @@ function render() {
   const freelancerList = document.querySelector("#freelancers");
   const listElements = FREELANCERS.map((freelancer) => {
     const listElement = document.createElement("li");
-    listElement.classList.add(
-      freelancer.name,
-      freelancer.price,
-      freelancer.occupation
-    );
+    listElement.textContent = (`${freelancer.name} - $${freelancer.price} - ${freelancer.occupation}`);
     return listElement;
   });
   freelancerList.replaceChildren(...listElements);
