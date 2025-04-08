@@ -35,18 +35,6 @@ const FREELANCERS = [
   },
 ];
 
-// average should calculate the length of prices * sum of prices, divided by length of prices array
-function sumPrices(price) {
-    let sum = 0;
-    for (let i = 0; i < PRICES.length; i++) {
-      sum += price[i];
-    }
-    return sum;
-  }
-const totalSum = sumPrices(PRICES);
-const AVERAGE = totalSum / PRICES.length;
-console.log(AVERAGE);
-
 // Add Freelancer with random properties for all three elements: name, price, occupation
 
 function addFreelancer() {
@@ -67,10 +55,25 @@ function render() {
   const freelancerList = document.querySelector("#freelancers");
   const listElements = FREELANCERS.map((freelancer) => {
     const listElement = document.createElement("li");
-    listElement.textContent = (`${freelancer.name} - $${freelancer.price} - ${freelancer.occupation}`);
+    listElement.textContent = `${freelancer.name} - $${freelancer.price} - ${freelancer.occupation}`;
     return listElement;
   });
   freelancerList.replaceChildren(...listElements);
+
+  // average should calculate the length of prices * sum of prices, divided by length of prices array
+  function sumPrices(price) {
+    let sum = 0;
+    for (let i = 0; i < PRICES.length; i++) {
+      sum += price[i];
+    }
+    return sum;
+  }
+  const totalSum = sumPrices(PRICES);
+  const AVERAGE = totalSum / PRICES.length;
+
+  const averageCalc = document.querySelector("#average");
+  averageCalc.textContent = `Average Price: $${AVERAGE}`;
+  return averageCalc;
 }
 
 // === Script ===
