@@ -35,6 +35,16 @@ const FREELANCERS = [
   },
 ];
 
+// average should calculate the length of prices * sum of prices, divided by length of prices array
+function sumPrices(price) {
+    let sum = 0;
+    for (let i = 0; i < PRICES.length; i++) {
+      sum += price[i];
+    }
+    return sum;
+  }
+const AVERAGE = (sum * PRICES.length) / PRICES.length
+
 // Add Freelancer with random properties for all three elements: name, price, occupation
 
 function addFreelancer() {
