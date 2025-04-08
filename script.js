@@ -43,7 +43,9 @@ function sumPrices(price) {
     }
     return sum;
   }
-const AVERAGE = (sum * PRICES.length) / PRICES.length
+const totalSum = sumPrices(PRICES);
+const AVERAGE = totalSum / PRICES.length;
+console.log(AVERAGE);
 
 // Add Freelancer with random properties for all three elements: name, price, occupation
 
