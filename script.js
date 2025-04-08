@@ -12,11 +12,11 @@ const NAMES = [
 const PRICES = [90, 70, 65, 60, 80, 100];
 const OCCUPATIONS = [
   "Marketing",
-  "Data Analyst",
+  "Analyst",
   "Architect",
-  "Quantitative Analyst",
-  "Housing Developer",
-  "Product Manager",
+  "Quant",
+  "Developer",
+  "Product",
   "Copywriter",
 ];
 
@@ -31,7 +31,7 @@ const FREELANCERS = [
   {
     name: "Emily",
     price: 65,
-    occupation: "Data Analyst",
+    occupation: "Analyst",
   },
 ];
 
@@ -44,7 +44,34 @@ function addFreelancer() {
     OCCUPATIONS[Math.floor(Math.random() * OCCUPATIONS.length)];
 
   FREELANCERS.push({ name, price, occupation });
-  if (FREELANCERS.length >= MAXLIST){
+  //   add below if statement back in later once the interval ID is created
+  if (FREELANCERS.length >= MAXLIST) {
     clearInterval(addFreelancerIntervalID);
   }
 }
+
+// Render the DOM to reflect the current state
+function render() {
+  const freelancerList = document.querySelector("#freelancers");
+  const listElements = FREELANCERS.map((freelancer) => {
+    const listElement = document.createElement("li");
+    listElement.classList.add(
+      freelancer.name,
+      freelancer.price,
+      freelancer.occupation
+    );
+    return listElement;
+  });
+  freelancerList.replaceChildren(...listElements);
+}
+
+// === Script ===
+// In this section, we call the functions that we've defined above
+render();
+// `setInterval` will call the callback function every 1000 milliseconds (1 second)
+const addFreelancerIntervalID = setInterval(() => {
+  addFreelancer();
+  render();
+}, 2000);
+// and return an interval ID that we can use to stop the interval later.
+// Calling `clearInterval(addShapeIntervalId)` will stop the interval.
