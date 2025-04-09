@@ -44,21 +44,32 @@ function addFreelancer() {
     OCCUPATIONS[Math.floor(Math.random() * OCCUPATIONS.length)];
 
   FREELANCERS.push({ name, price, occupation });
+  //   add below if statement back in later once the interval ID is created
+if (FREELANCERS.length >= MAXLIST) {
+    clearInterval(addFreelancerIntervalID);
+  }
 }
 
 // average should calculate the length of prices * sum of prices, divided by length of prices array
-function sumPrices(PRICES) {
+function sumPrices(FREELANCERS) {
   let sum = 0;
-  for (let i = 0; i < PRICES.length; i++) {
-    sum += PRICES[i];
+  for (let i = 0; i < FREELANCERS.length; i++) {
+    // const price = FREELANCERS[i].price;
+    console.log(`Freelancer ${i}:`, FREELANCERS[i]); // Debugging
+    console.log(`Freelancer ${i} price:`, FREELANCERS[i].price); // Debugging
+    sum = sum + parseInt(FREELANCERS[i].price); 
+    console.log(sum); //Debugging
   }
   return sum;
 }
 
 // Somewhere here I need to pass in the current freelancers array to calculate the average based on the updated array (updated every 2 seconds)
+// for each freelancer item created, pass freelancer.price into the PRICES array to calculate the average 
 function updateAverage() {
-  const PRICES = FREELANCERS.map(freelancer => freelancer.price);
-  const totalSum = sumPrices(PRICES);
+    console.log(FREELANCERS);
+//   const PRICES = FREELANCERS.map(freelancer => freelancer.price);
+  const totalSum = sumPrices(FREELANCERS);
+  console.log(sumPrices);
   const AVERAGE = totalSum / FREELANCERS.length;
 
   const averageCalc = document.querySelector("#average");
@@ -76,10 +87,6 @@ function render() {
   });
   freelancerList.replaceChildren(...listElements);
 }
-//   add below if statement back in later once the interval ID is created
-if (FREELANCERS.length >= MAXLIST) {
-  clearInterval(addFreelancerIntervalID);
-}
 
 // === Script ===
 // In this section, we call the functions that we've defined above
@@ -89,6 +96,6 @@ render();
 // Calling `clearInterval(addShapeIntervalId)` will stop the interval.
 const addFreelancerIntervalID = setInterval(() => {
   addFreelancer();
-  updateAverage(PRICES);
+  updateAverage();
   render();
 }, 2000);
