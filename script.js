@@ -44,10 +44,26 @@ function addFreelancer() {
     OCCUPATIONS[Math.floor(Math.random() * OCCUPATIONS.length)];
 
   FREELANCERS.push({ name, price, occupation });
-  //   add below if statement back in later once the interval ID is created
-  if (FREELANCERS.length >= MAXLIST) {
-    clearInterval(addFreelancerIntervalID);
+}
+
+// average should calculate the length of prices * sum of prices, divided by length of prices array
+function sumPrices(PRICES) {
+  let sum = 0;
+  for (let i = 0; i < PRICES.length; i++) {
+    sum += PRICES[i];
   }
+  return sum;
+}
+
+// Somewhere here I need to pass in the current freelancers array to calculate the average based on the updated array (updated every 2 seconds)
+function updateAverage() {
+  const PRICES = FREELANCERS.map(freelancer => freelancer.price);
+  const totalSum = sumPrices(PRICES);
+  const AVERAGE = totalSum / FREELANCERS.length;
+
+  const averageCalc = document.querySelector("#average");
+  averageCalc.textContent = `Average Price: $${AVERAGE}`;
+  return averageCalc;
 }
 
 // Render the DOM to reflect the current state
@@ -59,30 +75,20 @@ function render() {
     return listElement;
   });
   freelancerList.replaceChildren(...listElements);
-
-  // average should calculate the length of prices * sum of prices, divided by length of prices array
-  function sumPrices(price) {
-    let sum = 0;
-    for (let i = 0; i < PRICES.length; i++) {
-      sum += price[i];
-    }
-    return sum;
-  }
-  const totalSum = sumPrices(PRICES);
-  const AVERAGE = totalSum / PRICES.length;
-
-  const averageCalc = document.querySelector("#average");
-  averageCalc.textContent = `Average Price: $${AVERAGE}`;
-  return averageCalc;
+}
+//   add below if statement back in later once the interval ID is created
+if (FREELANCERS.length >= MAXLIST) {
+  clearInterval(addFreelancerIntervalID);
 }
 
 // === Script ===
 // In this section, we call the functions that we've defined above
 render();
-// `setInterval` will call the callback function every 1000 milliseconds (1 second)
-const addFreelancerIntervalID = setInterval(() => {
-  addFreelancer();
-  render();
-}, 2000);
+// `setInterval` will call the callback function every 2000 milliseconds (2 seconds)
 // and return an interval ID that we can use to stop the interval later.
 // Calling `clearInterval(addShapeIntervalId)` will stop the interval.
+const addFreelancerIntervalID = setInterval(() => {
+  addFreelancer();
+  updateAverage(PRICES);
+  render();
+}, 2000);
