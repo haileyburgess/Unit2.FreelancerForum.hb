@@ -54,9 +54,6 @@ if (FREELANCERS.length >= MAXLIST) {
 function sumPrices(FREELANCERS) {
   let sum = 0;
   for (let i = 0; i < FREELANCERS.length; i++) {
-    // const price = FREELANCERS[i].price;
-    console.log(`Freelancer ${i}:`, FREELANCERS[i]); // Debugging
-    console.log(`Freelancer ${i} price:`, FREELANCERS[i].price); // Debugging
     sum = sum + parseInt(FREELANCERS[i].price); 
     console.log(sum); //Debugging
   }
@@ -66,12 +63,8 @@ function sumPrices(FREELANCERS) {
 // Somewhere here I need to pass in the current freelancers array to calculate the average based on the updated array (updated every 2 seconds)
 // for each freelancer item created, pass freelancer.price into the PRICES array to calculate the average 
 function updateAverage() {
-    console.log(FREELANCERS);
-//   const PRICES = FREELANCERS.map(freelancer => freelancer.price);
   const totalSum = sumPrices(FREELANCERS);
-  console.log(sumPrices);
   const AVERAGE = totalSum / FREELANCERS.length;
-
   const averageCalc = document.querySelector("#average");
   averageCalc.textContent = `Average Price: $${AVERAGE}`;
   return averageCalc;
